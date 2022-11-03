@@ -1,14 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookStoreApp.API.Data;
 using BookStoreApp.API.Models.Author;
 using AutoMapper;
+using System.Collections;
 using BookStoreApp.API.Static;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookStoreApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthorsController : ControllerBase
     {
         private readonly BookStoreDbContext _context;
@@ -58,7 +66,7 @@ namespace BookStoreApp.API.Controllers
             }
             catch (Exception ex)
             {
-               // logger.LogError(ex, $"Error Performing GET in {nameof(GetAuthors)}");
+                logger.LogError(ex, $"Error Performing GET in {nameof(GetAuthors)}");
                 return StatusCode(500, Messages.Error500Message);
             }
         }
@@ -66,6 +74,7 @@ namespace BookStoreApp.API.Controllers
         // PUT: api/Authors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutAuthor(int id, AuthorUpdateDto authorDto)
         {
             if (id != authorDto.Id)
@@ -108,6 +117,7 @@ namespace BookStoreApp.API.Controllers
         // POST: api/Authors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<AuthorCreateDto>> PostAuthor(AuthorCreateDto authorDto)
         {
             try
@@ -128,6 +138,7 @@ namespace BookStoreApp.API.Controllers
 
         // DELETE: api/Authors/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteAuthor(int id)
         {
             try
@@ -147,7 +158,7 @@ namespace BookStoreApp.API.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex, $"Error Performing DELETE in {nameof(DeleteAuthor)}");
-                return NoContent();
+                return StatusCode(500, Messages.Error500Message);
             }
         }
 
