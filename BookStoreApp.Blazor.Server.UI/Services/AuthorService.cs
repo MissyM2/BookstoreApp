@@ -13,6 +13,23 @@ namespace BookStoreApp.Blazor.Server.UI.Services
 
         }
 
+        public async Task<Response<int>> CreateAuthor(AuthorCreateDto author)
+        {
+            Response<int> response = new ();
+
+            try
+            {
+                await GetBearerToken();
+                await client.AuthorsPOSTAsync(author);
+            }
+            catch (ApiException exception)
+            {
+
+                response = ConvertApiExceptions<int>(exception);
+            }
+            return response;
+        }
+
         public async Task<Response<List<AuthorReadOnlyDto>>> GetAuthors()
         {
             Response<List<AuthorReadOnlyDto>> response;
