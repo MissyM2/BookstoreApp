@@ -7,7 +7,7 @@
 <EditForm Model="Author">
     <fieldset disabled="true">
         <div class="form-group">
-        <label for="firstname">First Name</label>
+        <label for="firstname">First Name</label> - @Author.LastName
         <InputText class="form-control" @bind-Value="Author.FirstName" id="firstname" />
         <ValidationMessage For="@(() => Author.FirstName)" />
     </div>
