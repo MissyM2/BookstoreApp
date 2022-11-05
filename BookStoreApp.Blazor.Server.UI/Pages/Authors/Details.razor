@@ -1,0 +1,67 @@
+﻿@page "/authors/details/{id:int}"
+@inject IAuthorService authorService
+@inject NavigationManager navManager
+
+<h3>Details</h3>
+
+<EditForm Model="Author">
+    <fieldset disabled="true">
+        <div class="form-group">
+        <label for="firstname">First Name</label>
+        <InputText class="form-control" @bind-Value="Author.FirstName" id="firstname" />
+        <ValidationMessage For="@(() => Author.FirstName)" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="lastname">Last Name</label>
+        <InputText class="form-control" @bind-Value="Author.LastName" id="lastname" />
+        <ValidationMessage For="@(() => Author.LastName)" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="bio">Biography</label>
+        <InputText class="form-control" @bind-Value="Author.Bio" id="bio" />
+        <ValidationMessage For="@(() => Author.Bio)" />
+    </div>
+
+    </fieldset>
+
+    <button @onclick="GoToEdit" class="btn btn-warning">
+        <span class="oi oi-pencil"></span>
+        Edit Author
+    </button>
+    
+    <br />
+    <button @onclick="BackToList" class="btn btn-outline-secondary">
+        <span class="oi oil-media-skip-backward"></span>
+        Back To List
+    </button>
+
+</EditForm>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    private AuthorReadOnlyDto Author = new AuthorReadOnlyDto();
+
+    protected async override Task OnInitializedAsync()
+    {
+        var response = await authorService.GetAuthor(id);
+        if (response.Success)
+        {
+            Author = response.Data;
+        }
+    }
+
+    private void GoToEdit()
+    {
+        navManager.NavigateTo($"/authors/update/{Author.Id}");
+    }
+
+    private void BackToList()
+    {
+        navManager.NavigateTo("/authors/");
+    }
+
+}
