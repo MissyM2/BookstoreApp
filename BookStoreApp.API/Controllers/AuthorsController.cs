@@ -65,7 +65,6 @@ namespace BookStoreApp.API.Controllers
                     return NotFound();
                 }
 
-                var authorDto = mapper.Map<AuthorReadOnlyDto>(author);
                 return Ok(author);
             }
             catch (Exception ex)
