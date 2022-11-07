@@ -42,7 +42,7 @@
 
     private async Task HandleCreateAuthor()
     {
-        var response = await authorService.CreateAuthor(Author);
+        var response = await authorService.Create(Author);
         if(response.Success)
         {
             BackToList();

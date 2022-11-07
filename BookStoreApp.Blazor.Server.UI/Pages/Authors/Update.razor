@@ -54,7 +54,7 @@
 
     private async Task HandleUpdateAuthor()
     {
-        var response = await authorService.EditAuthor(id, Author);
+        var response = await authorService.Edit(id, Author);
         if (response.Success)
         {
             BackToList();
