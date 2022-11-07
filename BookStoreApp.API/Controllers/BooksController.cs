@@ -7,9 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookStoreApp.API.Data;
 using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using BookStoreApp.API.Data;
+using AutoMapper;
 using BookStoreApp.API.Models.Book;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
 
 namespace BookStoreApp.API.Controllers
 {
@@ -76,7 +87,20 @@ namespace BookStoreApp.API.Controllers
                 return NotFound();
             }
 
+            if (string.IsNullOrEmpty(bookDto.ImageData) == false)
+            {
+                bookDto.Image = CreateFile(bookDto.ImageData, bookDto.OriginalImageName);
+
+                var picName = Path.GetFileName(book.Image);
+                var path = $"{webHostEnvironment.WebRootPath}\\bookcoverimages\\{picName}";
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+            }
+
             mapper.Map(bookDto, book);
+
             _context.Entry(book).State = EntityState.Modified;
 
             try
@@ -103,15 +127,17 @@ namespace BookStoreApp.API.Controllers
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<BookCreateDto>> PostBook(BookCreateDto bookDto)
-        {   
+        {
             var book = mapper.Map<Book>(bookDto);
-            book.Image = CreateFile(bookDto.ImageData, bookDto.OriginalImageName);
+            if (string.IsNullOrEmpty(bookDto.ImageData) == false)
+            {
+                book.Image = CreateFile(bookDto.ImageData, bookDto.OriginalImageName);
+            }
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
         }
-
 
         // DELETE: api/Books/5
         [HttpDelete("{id}")]
@@ -132,11 +158,9 @@ namespace BookStoreApp.API.Controllers
 
         private string CreateFile(string imageBase64, string imageName)
         {
-
-            // get url for web app
             var url = HttpContext.Request.Host.Value;
             var ext = Path.GetExtension(imageName);
-            var fileName = $"{Guid.NewGuid().ToString()}.{ext}";
+            var fileName = $"{Guid.NewGuid()}{ext}";
 
             var path = $"{webHostEnvironment.WebRootPath}\\bookcoverimages\\{fileName}";
 

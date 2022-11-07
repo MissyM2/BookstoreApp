@@ -31,7 +31,7 @@
         Update Author
     </button>
     <br />
-    <button @onclick="BackToList" class="btn btn-outline-secondary">
+    <button @onclick="BackToList" class="btn btn-outline-secondary" type="button">
         <span class="oi oil-media-skip-backward"></span>
         Back To List
     </button>
@@ -46,7 +46,7 @@
 
     protected async override Task OnInitializedAsync()
     {
-        var response = await authorService.GetAuthorForUpdate(id);
+        var response = await authorService.GetForUpdate(id);
         if(response.Success)
         {
             Author = response.Data;

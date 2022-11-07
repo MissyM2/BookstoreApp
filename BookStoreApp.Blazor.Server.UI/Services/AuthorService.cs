@@ -113,7 +113,7 @@ namespace BookStoreApp.Blazor.Server.UI.Services
             return response;
         }
 
-        public async Task<Response<AuthorUpdateDto>> GetAuthorForUpdate(int id)
+        public async Task<Response<AuthorUpdateDto>> GetForUpdate(int id)
         {
             Response<AuthorUpdateDto> response;
 
