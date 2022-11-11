@@ -25,7 +25,7 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<IClient, Client>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
-//builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 

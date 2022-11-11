@@ -2,7 +2,7 @@
 {
     public partial class Client : IClient
     {
-        public HttpClient httpClient
+        public HttpClient HttpClient
         {
             get
             {
