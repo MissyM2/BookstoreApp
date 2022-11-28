@@ -3,38 +3,39 @@
 @inject NavigationManager navManager
 @attribute [Authorize(Roles = Roles.Administrator)]
 
-<h3>Edit Author</h3>
+<h3>Update Author</h3>
 
 <EditForm Model="Author" OnValidSubmit="HandleUpdateAuthor">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="form-group">
         <label for="firstname">First Name</label>
-        <InputText @bind-Value="Author.FirstName" class="form-control" id="firstname" />
+        <InputText class="form-control" @bind-Value="Author.FirstName" id="firstname" />
         <ValidationMessage For="@(() => Author.FirstName)" />
     </div>
     <br />
     <div class="form-group">
         <label for="lastname">Last Name</label>
-        <InputText @bind-Value="Author.LastName" class="form-control" id="lastname" />
+        <InputText class="form-control" @bind-Value="Author.LastName" id="lastname" />
         <ValidationMessage For="@(() => Author.LastName)" />
     </div>
     <br />
     <div class="form-group">
         <label for="bio">Biography</label>
-        <InputTextArea @bind-Value="Author.Bio" class="form-control" id="bio" />
+        <InputText class="form-control" @bind-Value="Author.Bio" id="bio" />
         <ValidationMessage For="@(() => Author.Bio)" />
     </div>
     <br />
-
-    <button class="btn btn-primary" type="submit">
+    <button type="submit" class="btn btn-primary">
         <span class="oi oi-pencil"></span>
         Update Author
     </button>
+    <br />
     <button @onclick="BackToList" class="btn btn-outline-secondary" type="button">
-        <span class="oi oi-media-skip-backward"></span>
+        <span class="oi oil-media-skip-backward"></span>
         Back To List
     </button>
+
 </EditForm>
 
 @code {
@@ -59,11 +60,13 @@
         {
             BackToList();
         }
+
     }
 
     private void BackToList()
     {
         navManager.NavigateTo("/authors/");
     }
+
 }
 

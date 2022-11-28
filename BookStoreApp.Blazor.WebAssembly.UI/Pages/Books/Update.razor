@@ -85,7 +85,7 @@
 
     protected async override Task OnInitializedAsync()
     {
-        var bookResponse = await bookService.GetBookForUpdate(id);
+        var bookResponse = await bookService.GetForUpdate(id);
         if (bookResponse.Success)
         {
             Book = bookResponse.Data;

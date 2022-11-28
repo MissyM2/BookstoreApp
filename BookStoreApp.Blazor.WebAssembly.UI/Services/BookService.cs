@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Blazored.LocalStorage;
+using BookStoreApp.Blazor.WebAssembly.UI.Models;
 using BookStoreApp.Blazor.WebAssembly.UI.Services.Base;
 
 namespace BookStoreApp.Blazor.WebAssembly.UI.Services
@@ -8,11 +9,11 @@ namespace BookStoreApp.Blazor.WebAssembly.UI.Services
     {
         private readonly IClient client;
         private readonly IMapper mapper;
+
         public BookService(IClient client, ILocalStorageService localStorage, IMapper mapper) : base(client, localStorage)
         {
             this.client = client;
             this.mapper = mapper;
-
         }
 
         public async Task<Response<int>> Create(BookCreateDto book)
@@ -26,9 +27,9 @@ namespace BookStoreApp.Blazor.WebAssembly.UI.Services
             }
             catch (ApiException exception)
             {
-
                 response = ConvertApiExceptions<int>(exception);
             }
+
             return response;
         }
 
@@ -43,12 +44,10 @@ namespace BookStoreApp.Blazor.WebAssembly.UI.Services
             }
             catch (ApiException exception)
             {
-
                 response = ConvertApiExceptions<int>(exception);
             }
+
             return response;
-
-
         }
 
         public async Task<Response<int>> Edit(int id, BookUpdateDto book)
@@ -62,9 +61,9 @@ namespace BookStoreApp.Blazor.WebAssembly.UI.Services
             }
             catch (ApiException exception)
             {
-
                 response = ConvertApiExceptions<int>(exception);
             }
+
             return response;
         }
 
@@ -75,7 +74,7 @@ namespace BookStoreApp.Blazor.WebAssembly.UI.Services
             try
             {
                 await GetBearerToken();
-                var data = await client.BooksGETAsync(id);
+                var data = await client.BooksGET2Async(id);
                 response = new Response<BookDetailsDto>
                 {
                     Data = data,
@@ -84,9 +83,31 @@ namespace BookStoreApp.Blazor.WebAssembly.UI.Services
             }
             catch (ApiException exception)
             {
-
                 response = ConvertApiExceptions<BookDetailsDto>(exception);
             }
+
+            return response;
+        }
+
+        public async Task<Response<BookReadOnlyDtoVirtualizeResponse>> Get(QueryParameters queryParams)
+        {
+            Response<BookReadOnlyDtoVirtualizeResponse> response;
+
+            try
+            {
+                await GetBearerToken();
+                var data = await client.BooksGETAsync(queryParams.StartIndex, queryParams.PageSize);
+                response = new Response<BookReadOnlyDtoVirtualizeResponse>
+                {
+                    Data = data,
+                    Success = true
+                };
+            }
+            catch (ApiException exception)
+            {
+                response = ConvertApiExceptions<BookReadOnlyDtoVirtualizeResponse>(exception);
+            }
+
             return response;
         }
 
@@ -97,7 +118,7 @@ namespace BookStoreApp.Blazor.WebAssembly.UI.Services
             try
             {
                 await GetBearerToken();
-                var data = await client.BooksAllAsync();
+                var data = await client.GetAll2Async();
                 response = new Response<List<BookReadOnlyDto>>
                 {
                     Data = data.ToList(),
@@ -106,20 +127,20 @@ namespace BookStoreApp.Blazor.WebAssembly.UI.Services
             }
             catch (ApiException exception)
             {
-
                 response = ConvertApiExceptions<List<BookReadOnlyDto>>(exception);
             }
+
             return response;
         }
 
-        public async Task<Response<BookUpdateDto>> GetBookForUpdate(int id)
+        public async Task<Response<BookUpdateDto>> GetForUpdate(int id)
         {
             Response<BookUpdateDto> response;
 
             try
             {
                 await GetBearerToken();
-                var data = await client.BooksGETAsync(id);
+                var data = await client.BooksGET2Async(id);
                 response = new Response<BookUpdateDto>
                 {
                     Data = mapper.Map<BookUpdateDto>(data),
@@ -128,11 +149,12 @@ namespace BookStoreApp.Blazor.WebAssembly.UI.Services
             }
             catch (ApiException exception)
             {
-
                 response = ConvertApiExceptions<BookUpdateDto>(exception);
             }
+
             return response;
         }
     }
 
 }
+
