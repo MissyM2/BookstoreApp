@@ -10,7 +10,6 @@
   "profiles": {
     "BookStoreApp.Blazor.Server.UI": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7037;http://localhost:5037",
       "environmentVariables": {
