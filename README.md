@@ -76,22 +76,26 @@ Projects:
   - Serilog.Sinks.Seq
   - Swashbuckle.AspNetCore
  
+- BookstoreApp.Blazor.Server.UI
+  - AutoMapper.Extensions.Microsoft.DependencyInjection
+  - Blazored.LocalStorage
+  - Newtonsoft.Json
+  - System.IdentityModel.Tokens.Jwt
  
-- EFCoreMocking.Tests
-
-  - Microsoft.NET.Test.Sdk
-  - xunit
-  - xunit.runner.visualstudio
-  - coverlet.collector
-  - Moq.EntityFrameworkCore
-  - MockQueryable.Moq
-  - Microsoft.AspNetCore.Mvc.Testing
-  - FluentAssertions"
+- BookstoreApp.Blazor.WebAssembly.UI
+  - AutoMapper.Extensions.Microsoft.DependencyInjection
+	- Blazored.LocalStorage
+	- Microsoft.AspNetCore.Authorization
+	- Microsoft.AspNetCore.Components.Authorization
+	- Microsoft.AspNetCore.Components.WebAssembly
+	- Microsoft.AspNetCore.Components.WebAssembly.DevServer
+	- Newtonsoft.Json
+	- System.IdentityModel.Tokens.Jwt
  
 ### Other Features
-  - .Api
-    - Data Transfer Objects
-    - Repository Base Wrapper
-  - .Tests
-      - Mocks
-      - Separate Controller CRUD tests
+  - Automapper for conversion between Data Transfer Objects and models
+  - AspNetCore Identity and IdentityDbContext
+  - EF Core
+  - Serilog
+  - Virtualization
+   
