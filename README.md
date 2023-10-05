@@ -1,4 +1,4 @@
-# BookstoreApp-Blazor-NET6
+# BookstoreApp
 ASP.NET, Blazor (Server/WebAssembly), API, EF Core, SqlServer, JWT, Auth
 
 ### Overview
@@ -62,19 +62,19 @@ Projects:
 
 ### Libraries
 
-- EFCoreMocking.Api
-  
-  - Microsoft.AspNetCore.OpenApi
-  - Swashbuckle.AspNetCore
-  - Microsoft.EntityFrameworkCore.Tools
-  - Microsoft.Data.Sqlite.Core
-  - Microsoft.EntityFrameworkCore.Sqlite.Core
-  - sqlite-net-pcl
-  - SQLitePCLRaw.bundle_green
-  - SQLitePCLRaw.provider.dynamic_cdecl
-  - Microsoft.EntityFrameworkCore
-  - NLog.Extensions.Logging
+- BookstoreApp.API
   - AutoMapper.Extensions.Microsoft.DependencyInjection
+  - Microsoft.AspNetCore.Authentication.JwtBearer
+  - Microsoft.AspNetCore.Identity.EntityFrameworkCore
+  - Microsoft.AspNetCore.Mvc.NewtonsoftJson
+  - Microsoft.EntityFrameworkCore.Design
+  - Microsoft.EntityFrameworkCore.SqlServer
+  - Microsoft.EntityFrameworkCore.Tools
+  - Microsoft.VisualStudio.Web.CodeGeneration.Design
+  - Serilog.AspNetCore
+  - Serilog.Expressions
+  - Serilog.Sinks.Seq
+  - Swashbuckle.AspNetCore
  
  
 - EFCoreMocking.Tests
